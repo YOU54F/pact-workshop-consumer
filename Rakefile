@@ -11,3 +11,15 @@ PactBroker::Client::PublicationTask.new do |task|
   task.consumer_version     = git_commit
   task.tag_with_git_branch  = true
 end
+
+require 'rspec/core/rake_task'
+
+
+RSpec::Core::RakeTask.new('pact:spec') do |task|
+  task.pattern = 'spec/pact/providers/**/*_spec.rb'
+  task.rspec_opts = ['-t pact']
+end
+RSpec::Core::RakeTask.new('pact:spec:v1') do |task|
+  task.pattern = 'spec/payment_service_client_spec.rb'
+  task.rspec_opts = ['-t pact']
+end

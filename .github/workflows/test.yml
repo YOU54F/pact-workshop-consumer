@@ -1,0 +1,21 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby_version: ["3.3"]
+        os: ["ubuntu-latest","windows-latest","macos-13", "macos-14"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby_version }}
+      - run: bundle install
+      - run: bundle exec rake pact:spec
+      - run: bundle exec rake pact:spec:v1
+        if: matrix.os != 'windows-latest'

@@ -1,0 +1,78 @@
+{
+  "consumer": {
+    "name": "PaymentServiceClient"
+  },
+  "interactions": [
+    {
+      "description": "http: a request for validating a payment method",
+      "pending": false,
+      "request": {
+        "method": "GET",
+        "path": "/validate-payment-method/1111222233334444"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "status": "valid"
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": 200
+      },
+      "transport": "http",
+      "type": "Synchronous/HTTP"
+    },
+    {
+      "description": "http: a request for validating the payment method",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "a black listed payment method"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/validate-payment-method/9999999999999999"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "status": "fraud"
+          },
+          "contentType": "application/json",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json"
+          ]
+        },
+        "status": 200
+      },
+      "transport": "http",
+      "type": "Synchronous/HTTP"
+    }
+  ],
+  "metadata": {
+    "pactRust": {
+      "ffi": "0.4.22",
+      "mockserver": "1.2.9",
+      "models": "1.2.3"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    },
+    "sbmt-pact": {
+      "pact-ffi": "0.4.22"
+    }
+  },
+  "provider": {
+    "name": "PaymentService"
+  }
+}
